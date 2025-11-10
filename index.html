@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTS AKSI - Sistem InvenPro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .presentation-container {
+            width: 100%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 60px;
+            min-height: 600px;
+            animation: fadeIn 0.5s;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 4px solid #667eea;
+            padding-bottom: 20px;
+        }
+
+        .slide h2 {
+            color: #764ba2;
+            font-size: 2em;
+            margin-bottom: 25px;
+            margin-top: 30px;
+        }
+
+        .slide h3 {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .slide ul, .slide ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .slide li {
+            margin-bottom: 12px;
+            line-height: 1.6;
+            font-size: 1.05em;
+        }
+
+        .slide p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .cover-slide {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .cover-slide h1 {
+            color: white;
+            border: none;
+            font-size: 3em;
+        }
+
+        .cover-slide p {
+            font-size: 1.3em;
+            margin: 10px 0;
+        }
+
+        .info-box {
+            background: #f8f9ff;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-prev, .btn-next {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-prev:hover, .btn-next:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-prev:disabled, .btn-next:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+
+        table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table tr:nth-child(even) {
+            background: #f8f9ff;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px;
+                min-height: 500px;
+            }
+            
+            .slide h1 {
+                font-size: 1.8em;
+            }
+            
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                padding: 15px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Cover -->
+        <div class="slide active cover-slide">
+            <h1>📊 ANALISIS KEBUTUHAN SISTEM INFORMASI</h1>
+            <h2 style="color: white; border: none;">Sistem InvenPro</h2>
+            <p style="margin-top: 40px;">Ujian Tengah Semester</p>
+            <p>Fakultas Sains dan Teknologi Terapan</p>
+            <p style="margin-top: 30px;"><strong>Tim Pengembang: ReLife</strong></p>
+            <p>Ketua: Ahmad Fauzan (2400016068)</p>
+            <p style="margin-top: 30px;"><strong>Tim Klien: Four Grow</strong></p>
+        </div>
+
+        <!-- Slide 2: Daftar Isi -->
+        <div class="slide">
+            <h1>📑 Daftar Isi</h1>
+            <div class="info-box">
+                <h3>Soal UTS AKSI 2025</h3>
+                <ol style="font-size: 1.2em; line-height: 2;">
+                    <li><strong>[20 Poin]</strong> Tujuan Bisnis Pengembangan Sistem</li>
+                    <li><strong>[30 Poin]</strong> Identifikasi Kebutuhan User</li>
+                    <li><strong>[30 Poin]</strong> Analisis Kebutuhan Fungsional</li>
+                    <li><strong>[20 Poin]</strong> Analisis Kebutuhan Non-Fungsional</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 3: Soal 1 - Tujuan Bisnis (Part 1) -->
+        <div class="slide">
+            <h1>1️⃣ Tujuan Bisnis Pengembangan Sistem</h1>
+            <h2>Latar Belakang</h2>
+            <div class="info-box">
+                <p><strong>Permasalahan Four Grow:</strong></p>
+                <ul>
+                    <li>Pencatatan manual menggunakan kertas/Excel</li>
+                    <li>Sering terjadi selisih data</li>
+                    <li>Keterlambatan pelaporan</li>
+                    <li>Kesalahan input yang berdampak pada akurasi</li>
+                </ul>
+            </div>
+            <h3>Solusi: Aplikasi InvenPro</h3>
+            <p>Sistem manajemen inventaris berbasis digital dengan otomatisasi proses dan pemantauan real-time</p>
+        </div>
+
+        <!-- Slide 4: Soal 1 - Tujuan Bisnis (Part 2) -->
+        <div class="slide">
+            <h1>1️⃣ Tujuan Bisnis (Lanjutan)</h1>
+            <h2>9 Tujuan Utama Sistem InvenPro</h2>
+            <ol>
+                <li><strong>Otomatisasi:</strong> Pencatatan barang masuk/keluar otomatis dengan update real-time</li>
+                <li><strong>Efisiensi:</strong> Memangkas waktu proses pencatatan, validasi, dan pelaporan</li>
+                <li><strong>Akurasi:</strong> Mengurangi human error melalui barcode scanner</li>
+                <li><strong>Transparansi:</strong> Data tercatat digital dan dapat ditelusuri</li>
+                <li><strong>Pelaporan Cepat:</strong> Laporan otomatis dan dashboard real-time</li>
+            </ol>
+        </div>
+
+        <!-- Slide 5: Soal 1 - Tujuan Bisnis (Part 3) -->
+        <div class="slide">
+            <h1>1️⃣ Tujuan Bisnis (Lanjutan)</h1>
+            <ol start="6">
+                <li><strong>Integrasi:</strong> Sinkronisasi data antar divisi (gudang, produksi, keuangan)</li>
+                <li><strong>Restock Tepat:</strong> Notifikasi otomatis saat stok menipis</li>
+                <li><strong>Independensi:</strong> Sistem cloud mengurangi ketergantungan pada staf tertentu</li>
+                <li><strong>Transformasi Digital:</strong> Evolusi dari sistem manual ke modern yang efisien</li>
+            </ol>
+            <div class="info-box">
+                <h3>📈 Peluang Bisnis</h3>
+                <ul>
+                    <li>Efisiensi waktu dan pengurangan biaya operasional</li>
+                    <li>Peningkatan akurasi data stok</li>
+                    <li>Transparansi antar divisi</li>
+                    <li>Pengambilan keputusan cepat berbasis data real-time</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 6: Soal 2 - Kebutuhan User (Part 1) -->
+        <div class="slide">
+            <h1>2️⃣ Identifikasi Kebutuhan User</h1>
+            <h2>Pengguna Sistem InvenPro</h2>
+            <div class="two-column">
+                <div>
+                    <h3>👥 4 Kategori Pengguna:</h3>
+                    <ol>
+                        <li><strong>Staf Gudang</strong><br>Input barang masuk/keluar</li>
+                        <li><strong>Admin Inventaris</strong><br>Validasi data dan laporan</li>
+                        <li><strong>Manajer</strong><br>Monitoring dan pengambilan keputusan</li>
+                        <li><strong>Divisi Keuangan</strong><br>Data stok untuk laporan pembelian</li>
+                    </ol>
+                </div>
+                <div class="info-box">
+                    <h3>🎯 Prinsip Akses</h3>
+                    <p>Setiap pengguna memiliki <span class="highlight">hak akses berbeda</span> untuk menjaga keamanan data dan memastikan setiap tindakan terekam dengan baik</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Soal 2 - User Stories -->
+        <div class="slide">
+            <h1>2️⃣ User Stories</h1>
+            <h3>📝 Staf Gudang</h3>
+            <ul>
+                <li>Mencatat barang masuk/keluar secara otomatis untuk pencatatan lebih cepat dan akurat</li>
+                <li>Input stok menggunakan barcode scanner untuk mengurangi kesalahan pengetikan</li>
+            </ul>
+            <h3>👨‍💼 Admin Inventaris</h3>
+            <ul>
+                <li>Melihat riwayat mutasi stok per tanggal/transaksi untuk audit</li>
+            </ul>
+            <h3>🎯 Kepala Gudang/Manajer</h3>
+            <ul>
+                <li>Menerima notifikasi otomatis saat stok menipis untuk restock tepat waktu</li>
+                <li>Melihat laporan stok real-time untuk pengambilan keputusan cepat</li>
+            </ul>
+            <h3>💼 Divisi Produksi & Keuangan</h3>
+            <ul>
+                <li>Data inventaris terintegrasi untuk sinkronisasi tanpa input berulang</li>
+            </ul>
+        </div>
+
+        <!-- Slide 8: Soal 2 - Kebutuhan Bisnis -->
+        <div class="slide">
+            <h1>2️⃣ Kebutuhan Bisnis & Use Case</h1>
+            <table>
+                <tr>
+                    <th>Kebutuhan Bisnis</th>
+                    <th>Strategi/Use Case</th>
+                </tr>
+                <tr>
+                    <td>Mempercepat pencatatan barang masuk/keluar</td>
+                    <td>• Manajemen Data Barang<br>• Transaksi Barang<br>• Cetak bukti penerimaan/pengeluaran</td>
+                </tr>
+                <tr>
+                    <td>Data stok akurat dan real-time</td>
+                    <td>• Pemantauan Stok otomatis<br>• Riwayat perubahan stok<br>• Update setiap transaksi</td>
+                </tr>
+                <tr>
+                    <td>Peringatan stok menipis</td>
+                    <td>• Notifikasi otomatis<br>• Daftar barang perlu restock<br>• Alert ke divisi pembelian</td>
+                </tr>
+                <tr>
+                    <td>Pelaporan & pengambilan keputusan</td>
+                    <td>• Generate laporan otomatis<br>• Ekspor ke Excel/PDF</td>
+                </tr>
+                <tr>
+                    <td>Integrasi antar divisi</td>
+                    <td>• Sinkronisasi data otomatis<br>• Akses berdasarkan user role</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 9: Soal 3 - Kebutuhan Fungsional (Part 1) -->
+        <div class="slide">
+            <h1>3️⃣ Analisis Kebutuhan Fungsional</h1>
+            <h2>F.1 - Staf Gudang</h2>
+            <div class="info-box">
+                <h3>F.1.1 - Mencatat Barang Masuk/Keluar</h3>
+                <ul>
+                    <li>Form input barang masuk</li>
+                    <li>Form input barang keluar</li>
+                    <li>Kode transaksi otomatis</li>
+                    <li>Simpan data ke database</li>
+                    <li>Update stok otomatis</li>
+                </ul>
+            </div>
+            <div class="info-box">
+                <h3>F.1.2 - Input Stok dengan Barcode</h3>
+                <ul>
+                    <li>Fitur pemindaian barcode</li>
+                    <li>Tampilkan hasil scan ke form</li>
+                    <li>Simpan data hasil pemindaian</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 10: Soal 3 - Kebutuhan Fungsional (Part 2) -->
+        <div class="slide">
+            <h1>3️⃣ Kebutuhan Fungsional (Lanjutan)</h1>
+            <div class="info-box">
+                <h3>F.1.3 - Lihat Daftar & Status Stok (Staf Gudang)</h3>
+                <ul>
+                    <li>Tampilkan daftar stok real-time</li>
+                    <li>Status stok (tersedia, menipis, kosong)</li>
+                    <li>Fitur pencarian barang</li>
+                </ul>
+            </div>
+            <h2>F.2 - Admin Inventaris</h2>
+            <div class="info-box">
+                <h3>F.2.1 - Riwayat Mutasi Stok</h3>
+                <ul>
+                    <li>Daftar riwayat transaksi masuk/keluar</li>
+                    <li>Detail transaksi per tanggal/jenis barang</li>
+                    <li>Filter pencarian data mutasi</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 11: Soal 3 - Kebutuhan Fungsional (Part 3) -->
+        <div class="slide">
+            <h1>3️⃣ Kebutuhan Fungsional (Lanjutan)</h1>
+            <div class="info-box">
+                <h3>F.2.2 - Laporan Stok Otomatis (Admin)</h3>
+                <ul>
+                    <li>Generate laporan harian/mingguan/bulanan</li>
+                    <li>Ekspor ke Excel atau PDF</li>
+                    <li>Grafik stok pada dashboard</li>
+                </ul>
+            </div>
+            <div class="info-box">
+                <h3>F.2.3 - Kelola Hak Akses Pengguna</h3>
+                <ul>
+                    <li>Tambah/ubah/hapus akun pengguna</li>
+                    <li>Atur peran pengguna (staf, admin, manajer)</li>
+                    <li>Simpan log aktivitas pengguna</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 12: Soal 3 - Kebutuhan Fungsional (Part 4) -->
+        <div class="slide">
+            <h1>3️⃣ Kebutuhan Fungsional (Lanjutan)</h1>
+            <h2>F.3 - Manajer</h2>
+            <div class="info-box">
+                <h3>F.3.1 - Laporan Stok Real-time</h3>
+                <ul>
+                    <li>Dashboard dengan grafik dan tabel</li>
+                    <li>Ringkasan barang menipis dan terlaris</li>
+                    <li>Fitur unduh laporan</li>
+                </ul>
+            </div>
+            <div class="info-box">
+                <h3>F.3.2 - Notifikasi Stok Menipis</h3>
+                <ul>
+                    <li>Notifikasi otomatis ke manajer</li>
+                    <li>Daftar barang perlu restock</li>
+                    <li>Pesan via email atau WhatsApp</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 13: Soal 3 - Kebutuhan Fungsional (Part 5) -->
+        <div class="slide">
+            <h1>3️⃣ Kebutuhan Fungsional (Lanjutan)</h1>
+            <h2>F.4 - Divisi Keuangan</h2>
+            <div class="info-box">
+                <h3>F.4.1 - Akses Data Stok untuk Laporan Pembelian</h3>
+                <ul>
+                    <li>Tampilkan data stok relevan dengan laporan pembelian</li>
+                    <li>Ekspor laporan nilai aset gudang</li>
+                    <li>Integrasi data ke sistem keuangan</li>
+                </ul>
+            </div>
+            <h2>F.5 - Semua Pengguna</h2>
+            <div class="info-box">
+                <h3>F.5.1 - Login & Keamanan Sistem</h3>
+                <ul>
+                    <li>Form login dan registrasi akun</li>
+                    <li>Autentikasi username dan password</li>
+                    <li>Verifikasi dua langkah (2FA)</li>
+                    <li>Log aktivitas login</li>
+                    <li>Enkripsi data</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 14: Soal 3 - Kebutuhan Fungsional (Part 6) -->
+        <div class="slide">
+            <h1>3️⃣ Kebutuhan Fungsional (Lanjutan)</h1>
+            <div class="info-box">
+                <h3>F.5.2 - Backup & Pemulihan Data</h3>
+                <ul>
+                    <li>Backup data otomatis harian/mingguan ke cloud</li>
+                    <li>Fitur pemulihan data dari backup</li>
+                    <li>Tampilkan status proses backup</li>
+                </ul>
+            </div>
+            <h2>📊 Ringkasan Kebutuhan Fungsional</h2>
+            <ul>
+                <li><strong>5 Kategori Pengguna</strong> dengan kebutuhan spesifik</li>
+                <li><strong>19 Fitur Utama</strong> yang terintegrasi</li>
+                <li><strong>50+ Sub-fitur</strong> untuk mendukung operasional</li>
+            </ul>
+        </div>
+
+        <!-- Slide 15: Soal 4 - Kebutuhan Non-Fungsional (Part 1) -->
+        <div class="slide">
+            <h1>4️⃣ Analisis Kebutuhan Non-Fungsional</h1>
+            <h2>Tabel Format Kebutuhan Non-Fungsional</h2>
+            <table style="font-size: 0.9em;">
+                <tr>
+                    <th style="width: 15%;">No</th>
+                    <th style="width: 35%;">Aspek Non-Fungsional</th>
+                    <th style="width: 50%;">Kode & Deskripsi</th>
+                </tr>
+                <tr>
+                    <td><strong>NF.1</strong></td>
+                    <td><strong>Keamanan (Security)</strong></td>
+                    <td>
+                        <strong>NF.1.1</strong> Sistem harus mengenkripsi password pengguna<br>
+                        <strong>NF.1.2</strong> Sistem harus mendukung verifikasi dua langkah (2FA)<br>
+                        <strong>NF.1.3</strong> Sistem harus menerapkan hak akses berbeda per role
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>NF.2</strong></td>
+                    <td><strong>Performa (Performance)</strong></td>
+                    <td>
+                        <strong>NF.2.1</strong> Sistem harus update stok secara real-time<br>
+                        <strong>NF.2.2</strong> Response time input maksimal 2 detik<br>
+                        <strong>NF.2.3</strong> Dashboard loading time maksimal 3 detik
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 16: Soal 4 - Kebutuhan Non-Fungsional (Part 2) -->
+        <div class="slide">
+            <h1>4️⃣ Kebutuhan Non-Fungsional (Lanjutan)</h1>
+            <table style="font-size: 0.9em;">
+                <tr>
+                    <th style="width: 15%;">No</th>
+                    <th style="width: 35%;">Aspek Non-Fungsional</th>
+                    <th style="width: 50%;">Kode & Deskripsi</th>
+                </tr>
+                <tr>
+                    <td><strong>NF.3</strong></td>
+                    <td><strong>Ketersediaan (Availability)</strong></td>
+                    <td>
+                        <strong>NF.3.1</strong> Sistem harus beroperasi 24/7<br>
+                        <strong>NF.3.2</strong> Sistem berbasis cloud dapat diakses dari mana saja<br>
+                        <strong>NF.3.3</strong> System uptime minimal 99%
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>NF.4</strong></td>
+                    <td><strong>Kegunaan (Usability)</strong></td>
+                    <td>
+                        <strong>NF.4.1</strong> Interface harus user-friendly dan intuitif<br>
+                        <strong>NF.4.2</strong> Sistem harus mudah dipelajari dalam 1 hari pelatihan<br>
+                        <strong>NF.4.3</strong> Sistem harus support multi-device (desktop, tablet, mobile)
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>NF.5</strong></td>
+                    <td><strong>Kompatibilitas (Compatibility)</strong></td>
+                    <td>
+                        <strong>NF.5.1</strong> Kompatibel dengan browser modern (Chrome, Firefox, Edge)<br>
+                        <strong>NF.5.2</strong> Support barcode scanner untuk input cepat<br>
+                        <strong>NF.5.3</strong> Dapat terintegrasi dengan sistem eksternal via API
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 17: Soal 4 - Kebutuhan Non-Fungsional (Part 3) -->
+        <div class="slide">
+            <h1>4️⃣ Kebutuhan Non-Fungsional (Lanjutan)</h1>
+            <table style="font-size: 0.9em;">
+                <tr>
+                    <th style="width: 15%;">No</th>
+                    <th style="width: 35%;">Aspek Non-Fungsional</th>
+                    <th style="width: 50%;">Kode & Deskripsi</th>
+                </tr>
+                <tr>
+                    <td><strong>NF.6</strong></td>
+                    <td><strong>Keandalan (Reliability)</strong></td>
+                    <td>
+                        <strong>NF.6.1</strong> Sistem harus melakukan backup otomatis harian/mingguan<br>
+                        <strong>NF.6.2</strong> Sistem harus memiliki fitur pemulihan data dari backup<br>
+                        <strong>NF.6.3</strong> Tingkat error maksimal 0.1%
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>NF.7</strong></td>
+                    <td><strong>Pemeliharaan (Maintainability)</strong></td>
+                    <td>
+                        <strong>NF.7.1</strong> Sistem harus mudah di-maintenance dan update<br>
+                        <strong>NF.7.2</strong> Dokumentasi sistem harus lengkap dan terstruktur<br>
+                        <strong>NF.7.3</strong> Bug fixing harus dapat dilakukan maksimal 24 jam
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>NF.8</strong></td>
+                    <td><strong>Skalabilitas (Scalability)</strong></td>
+                    <td>
+                        <strong>NF.8.1</strong> Sistem dapat menangani minimal 100 user concurrent<br>
+                        <strong>NF.8.2</strong> Database dapat menyimpan data hingga 10 tahun<br>
+                        <strong>NF.8.3</strong> Infrastruktur cloud dapat di-upgrade sesuai kebutuhan
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 18: Soal 4 - Kebutuhan Non-Fungsional (Part 4) -->
+        <div class="slide">
+            <h1>4️⃣ Kebutuhan Non-Fungsional (Lanjutan)</h1>
+            <table style="font-size: 0.9em;">
+                <tr>
+                    <th style="width: 15%;">No</th>
+                    <th style="width: 35%;">Aspek Non-Fungsional</th>
+                    <th style="width: 50%;">Kode & Deskripsi</th>
+                </tr>
+                <tr>
+                    <td><strong>NF.9</strong></td>
+                    <td><strong>Integritas Data (Data Integrity)</strong></td>
+                    <td>
+                        <strong>NF.9.1</strong> Sistem harus mencatat log semua aktivitas pengguna<br>
+                        <strong>NF.9.2</strong> Sistem harus tracking siapa mengubah/menghapus data<br>
+                        <strong>NF.9.3</strong> Sistem harus validasi data input untuk akurasi 99%
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>NF.10</strong></td>
+                    <td><strong>Portabilitas (Portability)</strong></td>
+                    <td>
+                        <strong>NF.10.1</strong> Sistem dapat diakses dari berbagai perangkat<br>
+                        <strong>NF.10.2</strong> Data dapat diekspor ke format Excel dan PDF<br>
+                        <strong>NF.10.3</strong> Sistem tidak bergantung pada platform tertentu
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>NF.11</strong></td>
+                    <td><strong>Kepatuhan (Compliance)</strong></td>
+                    <td>
+                        <strong>NF.11.1</strong> Sistem harus memiliki kebijakan privasi yang jelas<br>
+                        <strong>NF.11.2</strong> Sistem harus mematuhi perlindungan data pengguna<br>
+                        <strong>NF.11.3</strong> Sistem harus memiliki kode etik penggunaan
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 19: Soal 4 - Kebutuhan Non-Fungsional (Part 5) -->
+        <div class="slide">
+            <h1>4️⃣ Kebutuhan Non-Fungsional (Lanjutan)</h1>
+            <table style="font-size: 0.9em;">
+                <tr>
+                    <th style="width: 15%;">No</th>
+                    <th style="width: 35%;">Aspek Non-Fungsional</th>
+                    <th style="width: 50%;">Kode & Deskripsi</th>
+                </tr>
+                <tr>
+                    <td><strong>NF.12</strong></td>
+                    <td><strong>Kapasitas (Capacity)</strong></td>
+                    <td>
+                        <strong>NF.12.1</strong> Sistem harus menangani minimal 1000 transaksi/hari<br>
+                        <strong>NF.12.2</strong> Database dapat menyimpan minimal 100.000 item barang<br>
+                        <strong>NF.12.3</strong> Sistem dapat generate laporan untuk 5 tahun data
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>NF.13</strong></td>
+                    <td><strong>Aksesibilitas (Accessibility)</strong></td>
+                    <td>
+                        <strong>NF.13.1</strong> Pengguna harus memiliki koneksi internet memadai<br>
+                        <strong>NF.13.2</strong> Sistem dapat diakses dengan bandwidth minimal 1 Mbps<br>
+                        <strong>NF.13.3</strong> Sistem responsive untuk berbagai ukuran layar
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>NF.14</strong></td>
+                    <td><strong>Recovery</strong></td>
+                    <td>
+                        <strong>NF.14.1</strong> Recovery time objective (RTO) maksimal 4 jam<br>
+                        <strong>NF.14.2</strong> Recovery point objective (RPO) maksimal 1 jam<br>
+                        <strong>NF.14.3</strong> Sistem harus memiliki disaster recovery plan
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 19A: Ringkasan Kebutuhan Non-Fungsional -->
+        <div class="slide">
+            <h1>4️⃣ Ringkasan Kebutuhan Non-Fungsional</h1>
+            <h2>📊 Total: 14 Aspek dengan 42 Sub-Kebutuhan</h2>
+            <div class="two-column">
+                <div class="info-box">
+                    <h3>Kategori Utama:</h3>
+                    <ul>
+                        <li>🔒 NF.1 - Keamanan (Security)</li>
+                        <li>⚡ NF.2 - Performa (Performance)</li>
+                        <li>🌐 NF.3 - Ketersediaan (Availability)</li>
+                        <li>📱 NF.4 - Kegunaan (Usability)</li>
+                        <li>🔗 NF.5 - Kompatibilitas</li>
+                        <li>✅ NF.6 - Keandalan (Reliability)</li>
+                        <li>🔧 NF.7 - Pemeliharaan</li>
+                    </ul>
+                </div>
+                <div class="info-box">
+                    <h3>&nbsp;</h3>
+                    <ul>
+                        <li>📈 NF.8 - Skalabilitas (Scalability)</li>
+                        <li>💾 NF.9 - Integritas Data</li>
+                        <li>🔄 NF.10 - Portabilitas</li>
+                        <li>📋 NF.11 - Kepatuhan (Compliance)</li>
+                        <li>💪 NF.12 - Kapasitas (Capacity)</li>
+                        <li>🌍 NF.13 - Aksesibilitas</li>
+                        <li>🔁 NF.14 - Recovery</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="info-box" style="margin-top: 20px;">
+                <p><strong>Catatan:</strong> Semua kebutuhan non-fungsional dirancang untuk memastikan sistem InvenPro dapat beroperasi dengan optimal, aman, reliable, dan memberikan pengalaman pengguna yang baik.</p>
+            </div>
+        </div>
+
+        <!-- Slide 20: Kesimpulan -->
+        <div class="slide">
+            <h1>📌 Kesimpulan</h1>
+            <h2>Kriteria Sukses Sistem InvenPro</h2>
+            <div class="info-box">
+                <ul>
+                    <li>✅ Waktu input dan pembuatan laporan berkurang signifikan</li>
+                    <li>✅ Selisih stok fisik dan sistem menurun drastis</li>
+                    <li>✅ Kesalahan input hampir tidak ada</li>
+                    <li>✅ Laporan otomatis harian/bulanan berjalan baik</li>
+                    <li>✅ Semua pengguna dapat menggunakan aplikasi dengan mudah</li>
+                </ul>
+            </div>
+            <h2>Manfaat Transformasi Digital</h2>
+            <ul>
+                <li>🚀 <strong>Efisiensi operasional</strong> meningkat drastis</li>
+                <li>💰 <strong>Pengurangan biaya</strong> operasional</li>
+                <li>📊 <strong>Akurasi data</strong> hingga 99%</li>
+                <li>🔗 <strong>Integrasi antar divisi</strong> yang seamless</li>
+                <li>⚡ <strong>Pengambilan keputusan</strong> lebih cepat berbasis data real-time</li>
+            </ul>
+        </div>
+
+        <!-- Slide 21: Output Aplikasi -->
+        <div class="slide">
+            <h1>📤 Output yang Dihasilkan Sistem</h1>
+            <div class="two-column">
+                <div>
+                    <h3>📊 Dashboard & Visualisasi</h3>
+                    <ul>
+                        <li>Overview kondisi stok real-time</li>
+                        <li>Grafik dan tabel detail per item</li>
+                        <li>Ringkasan barang menipis dan terlaris</li>
+                    </ul>
+                    <h3>📑 Laporan Otomatis</h3>
+                    <ul>
+                        <li>Laporan stok harian/mingguan/bulanan</li>
+                        <li>Laporan barang masuk dan keluar</li>
+                        <li>Laporan barang rusak atau retur</li>
+                        <li>Laporan nilai aset gudang</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>🔔 Sistem Notifikasi</h3>
+                    <ul>
+                        <li>Notifikasi stok menipis via aplikasi</li>
+                        <li>Alert via WhatsApp dan Email</li>
+                        <li>Daftar barang perlu restock</li>
+                    </ul>
+                    <h3>📋 Fitur Tambahan</h3>
+                    <ul>
+                        <li>Riwayat mutasi dengan filter</li>
+                        <li>Ekspor laporan ke Excel/PDF</li>
+                        <li>Manajemen supplier</li>
+                        <li>Audit trail lengkap</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 22: Solusi Masalah -->
+        <div class="slide">
+            <h1>💡 Solusi Terhadap Masalah</h1>
+            <table>
+                <tr>
+                    <th>Masalah</th>
+                    <th>Solusi InvenPro</th>
+                </tr>
+                <tr>
+                    <td>❌ Ketidakakuratan data stok</td>
+                    <td>✅ Input otomatis & data real-time terintegrasi</td>
+                </tr>
+                <tr>
+                    <td>❌ Inefisiensi waktu & proses</td>
+                    <td>✅ Sistem otomatis untuk input, validasi, & laporan</td>
+                </tr>
+                <tr>
+                    <td>❌ Human error tinggi</td>
+                    <td>✅ Barcode scanner & validasi otomatis</td>
+                </tr>
+                <tr>
+                    <td>❌ Data terpisah antar divisi</td>
+                    <td>✅ Sistem terpadu dengan sinkronisasi otomatis</td>
+                </tr>
+                <tr>
+                    <td>❌ Ketergantungan personel</td>
+                    <td>✅ Sistem cloud dengan multi-user access</td>
+                </tr>
+                <tr>
+                    <td>❌ Keterlambatan restock</td>
+                    <td>✅ Notifikasi otomatis & dashboard real-time</td>
+                </tr>
+                <tr>
+                    <td>❌ Biaya operasional tinggi</td>
+                    <td>✅ Otomatisasi mengurangi kerja manual</td>
+                </tr>
+                <tr>
+                    <td>❌ Kurang transparansi</td>
+                    <td>✅ Audit trail & log aktivitas lengkap</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 23: Teknologi & Arsitektur -->
+        <div class="slide">
+            <h1>🔧 Teknologi & Arsitektur Sistem</h1>
+            <h2>Lingkungan Aplikasi</h2>
+            <div class="info-box">
+                <h3>⏰ Operasional</h3>
+                <p><strong>24/7 Non-stop</strong> - Memfasilitasi akses kapan saja dari berbagai lokasi</p>
+            </div>
+            <div class="two-column">
+                <div class="info-box">
+                    <h3>☁️ Cloud-Based System</h3>
+                    <ul>
+                        <li>Akses dari mana saja</li>
+                        <li>Backup otomatis</li>
+                        <li>Scalable infrastructure</li>
+                        <li>Multi-device support</li>
+                    </ul>
+                </div>
+                <div class="info-box">
+                    <h3>🔐 Keamanan Data</h3>
+                    <ul>
+                        <li>Enkripsi end-to-end</li>
+                        <li>Role-based access</li>
+                        <li>2FA authentication</li>
+                        <li>Backup harian/mingguan</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 24: User Access & Roles -->
+        <div class="slide">
+            <h1>👥 Manajemen Pengguna & Hak Akses</h1>
+            <h2>Pembagian Berdasarkan BPMN</h2>
+            <table>
+                <tr>
+                    <th>Role</th>
+                    <th>Hak Akses</th>
+                    <th>Wewenang</th>
+                </tr>
+                <tr>
+                    <td><strong>Staf Gudang</strong></td>
+                    <td>Input & Update Data</td>
+                    <td>• Input barang masuk/keluar<br>• Update stok<br>• Scan barcode<br>• Lihat status stok</td>
+                </tr>
+                <tr>
+                    <td><strong>Admin Inventaris</strong></td>
+                    <td>Validasi & Laporan</td>
+                    <td>• Validasi data transaksi<br>• Generate laporan<br>• Kelola user<br>• Lihat riwayat mutasi</td>
+                </tr>
+                <tr>
+                    <td><strong>Manajer</strong></td>
+                    <td>Monitoring & Keputusan</td>
+                    <td>• Dashboard real-time<br>• Laporan lengkap<br>• Notifikasi stok<br>• Approval restock</td>
+                </tr>
+                <tr>
+                    <td><strong>Divisi Keuangan</strong></td>
+                    <td>Read-Only + Export</td>
+                    <td>• Akses data stok<br>• Ekspor laporan<br>• Laporan nilai aset<br>• Integrasi sistem</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 25: Risiko & Mitigasi Detail -->
+        <div class="slide">
+            <h1>⚠️ Manajemen Risiko</h1>
+            <div class="two-column">
+                <div>
+                    <div class="info-box">
+                        <h3>🐛 Risiko Teknis</h3>
+                        <ul>
+                            <li><strong>Bug sistem</strong><br>Mitigasi: Testing menyeluruh & QA</li>
+                            <li><strong>Masalah jaringan</strong><br>Mitigasi: Offline mode untuk fungsi kritis</li>
+                            <li><strong>Keterbatasan IT</strong><br>Mitigasi: Cloud managed service & support</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="info-box">
+                        <h3>👤 Risiko Manusia</h3>
+                        <ul>
+                            <li><strong>Human error input</strong><br>Mitigasi: Validasi otomatis & barcode</li>
+                            <li><strong>Penolakan pengguna</strong><br>Mitigasi: Pelatihan & change management</li>
+                            <li><strong>Resistensi digital</strong><br>Mitigasi: User-friendly interface & support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 26: Fitur Keamanan Detail -->
+        <div class="slide">
+            <h1>🔐 Fitur Keamanan Sistem</h1>
+            <h2>Login & Registrasi</h2>
+            <div class="info-box">
+                <ul>
+                    <li>✅ Wajib login/registrasi sebelum akses aplikasi</li>
+                    <li>✅ Username dan password unik per pengguna</li>
+                    <li>✅ Enkripsi password dengan algoritma kuat</li>
+                    <li>✅ Verifikasi dua langkap (2FA) opsional</li>
+                    <li>✅ Session management & auto-logout</li>
+                </ul>
+            </div>
+            <h2>Audit Trail & Transparansi</h2>
+            <div class="info-box">
+                <ul>
+                    <li>📝 Log semua aktivitas pengguna</li>
+                    <li>📝 Tracking siapa mengubah/menghapus data</li>
+                    <li>📝 Timestamp untuk setiap transaksi</li>
+                    <li>📝 History lengkap untuk audit internal</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 27: Integrasi Sistem -->
+        <div class="slide">
+            <h1>🔗 Integrasi Antar Divisi</h1>
+            <h2>Sinkronisasi Data Real-time</h2>
+            <div class="info-box">
+                <p><strong>Tujuan:</strong> Semua divisi bekerja dengan sumber data yang sama, menghilangkan redundansi dan inkonsistensi data</p>
+            </div>
+            <h3>Flow Integrasi:</h3>
+            <ol>
+                <li><strong>Gudang → Sistem Inventaris</strong><br>Input transaksi masuk/keluar otomatis update stok</li>
+                <li><strong>Sistem Inventaris → Produksi</strong><br>Data ketersediaan bahan baku real-time</li>
+                <li><strong>Sistem Inventaris → Keuangan</strong><br>Data nilai aset dan laporan pembelian</li>
+                <li><strong>Sistem Inventaris → Pembelian</strong><br>Notifikasi restock untuk procurement</li>
+            </ol>
+            <div class="info-box">
+                <p><strong>Benefit:</strong> Eliminasi input data berulang, sinkronisasi otomatis, dan keputusan berbasis data terkini</p>
+            </div>
+        </div>
+
+        <!-- Slide 28: Metrik Keberhasilan -->
+        <div class="slide">
+            <h1>📈 Metrik Keberhasilan (KPI)</h1>
+            <h2>Indikator Kuantitatif</h2>
+            <table>
+                <tr>
+                    <th>Metrik</th>
+                    <th>Target</th>
+                </tr>
+                <tr>
+                    <td>Waktu input data</td>
+                    <td>Berkurang 70% dari metode manual</td>
+                </tr>
+                <tr>
+                    <td>Akurasi data stok</td>
+                    <td>Mencapai 99%</td>
+                </tr>
+                <tr>
+                    <td>Selisih stok fisik vs sistem</td>
+                    <td>Menurun 90%</td>
+                </tr>
+                <tr>
+                    <td>Waktu pembuatan laporan</td>
+                    <td>Dari 2 jam → 5 menit (otomatis)</td>
+                </tr>
+                <tr>
+                    <td>Response time restock</td>
+                    <td>Notifikasi real-time saat stok < minimum</td>
+                </tr>
+                <tr>
+                    <td>User adoption rate</td>
+                    <td>100% pengguna terlatih dalam 1 bulan</td>
+                </tr>
+                <tr>
+                    <td>System uptime</td>
+                    <td>Minimal 99%</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 29: Roadmap Implementasi -->
+        <div class="slide">
+            <h1>🗺️ Roadmap Implementasi</h1>
+            <h2>Tahapan Pengembangan</h2>
+            <div class="info-box">
+                <h3>Phase 1: Persiapan & Analisis</h3>
+                <ul>
+                    <li>✅ Elisitasi kebutuhan (completed)</li>
+                    <li>✅ Analisis fungsional & non-fungsional (completed)</li>
+                    <li>⏳ Perancangan database & arsitektur sistem</li>
+                </ul>
+            </div>
+            <div class="info-box">
+                <h3>Phase 2: Development</h3>
+                <ul>
+                    <li>Pembangunan backend & database</li>
+                    <li>Pembangunan frontend & UI/UX</li>
+                    <li>Integrasi barcode scanner</li>
+                    <li>Implementasi fitur keamanan</li>
+                </ul>
+            </div>
+            <div class="info-box">
+                <h3>Phase 3: Testing & Deployment</h3>
+                <ul>
+                    <li>Unit testing & integration testing</li>
+                    <li>User Acceptance Testing (UAT)</li>
+                    <li>Pelatihan pengguna</li>
+                    <li>Go-live & monitoring</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 30: Penutup -->
+        <div class="slide cover-slide">
+            <h1>✨ Terima Kasih</h1>
+            <div style="margin-top: 50px;">
+                <h2 style="color: white; border: none; font-size: 1.8em;">Tim Pengembang ReLife</h2>
+                <p style="margin-top: 30px; font-size: 1.2em;">Ketua: Ahmad Fauzan (2400016068)</p>
+                <p style="font-size: 1.1em; margin-top: 10px;">Anggota:</p>
+                <p>Zakwan Dia'ul Ikhsan (2400016091)</p>
+                <p>Neil Melikah Fitri SUM (2400016095)</p>
+                <p>Suci Sulistyowati (2415016102)</p>
+                <p style="margin-top: 40px; font-size: 1.2em;"><strong>Tim Klien: Four Grow</strong></p>
+                <p style="margin-top: 40px; font-style: italic;">"Transformasi Digital untuk Efisiensi Inventaris"</p>
+            </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="controls">
+            <button class="btn-prev" onclick="prevSlide()">← Previous</button>
+            <span class="slide-counter">
+                <span id="current-slide">1</span> / <span id="total-slides">30</span>
+            </span>
+            <button class="btn-next" onclick="nextSlide()">Next →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('total-slides').textContent = totalSlides;
+        
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+            
+            document.querySelector('.btn-prev').disabled = currentSlide === 0;
+            document.querySelector('.btn-next').disabled = currentSlide === totalSlides - 1;
+            
+            // Scroll to top of slide
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+        
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
